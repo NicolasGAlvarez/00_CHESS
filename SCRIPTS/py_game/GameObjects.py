@@ -5,8 +5,7 @@ from py_game.Utils import to_pygame, load_image, get_coords_by_position
 from math import floor
 
 class BoardGameObject:
-    def __init__(self, board=None):
-        # pygame.sprite.Sprite.__init__(self)
+    def __init__(self, board=None):        
         self.image, self.rect = load_image('Board.png')
         self.board = board
         self.pieces = []
