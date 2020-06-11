@@ -3,7 +3,7 @@ import pygame
 import chess.ChessBoard as cb
 import py_game.GameObjects as go
 
-scenario = 'castling1'
+scenario = 'castling2'
 
 try:
     # Initialize board object
@@ -19,7 +19,7 @@ try:
         board.pieces.extend([p1, k, r])
     elif scenario == 'setup':
         # Set up board piece as new game
-        board.setupBoard()
+        pass
     elif scenario == 'castling1':
         # White cannot castle on either side because its king is in check
         import chess.ChessPiece as cp
@@ -30,6 +30,7 @@ try:
         bk = cp.King('black', 'e8')
         board.pieces.extend([r1, r2, bk, q, wk])
     elif scenario == 'castling2':
+        # Can castle queen side. Not king side.
         import chess.ChessPiece as cp
         r1 = cp.Rook('white', 'a1', 'Queen')
         r2 = cp.Rook('white', 'h1', 'King')
@@ -37,8 +38,22 @@ try:
         q = cp.Queen('black', 'g7')
         bk = cp.King('black', 'e8')
         board.pieces.extend([r1, r2, bk, q, wk])
+    elif scenario == 'checkmate1':
+        import chess.ChessPiece as cp
+        bk = cp.King('black', 'e1')
+        wk = cp.King('white', 'h1')
+        wr = cp.Rook('white', 'f2')
+        wq = cp.Queen('white', 'g3')
+        board.pieces.extend([bk, wk, wr, wq])
+    elif scenario == 'checkmate2':
+        import chess.ChessPiece as cp
+        wk = cp.King('white', 'a6')
+        bq = cp.Queen('black', 'b6')
+        bk = cp.King('black', 'c6')
+        board.pieces.extend([wk, bq, bk])
 
 
+    board.update()
     # Initialize pygame object
     pygame.init()
     screen = pygame.display.set_mode((598,598))
@@ -81,13 +96,13 @@ try:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            running = False
+            running = False        
 
         # handle MOUSEBUTTONDOWN
         if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-
             board.board.update()
+
+            pos = pygame.mouse.get_pos()
 
             # get a list of all sprites that are under the mouse cursor
             clicked_piece = [p for p in pieces_sprites if p.rect.collidepoint(pos)]
@@ -95,25 +110,31 @@ try:
             # If it clicks a possible move.
             clicked_move = [m for m in moves_sprites if m.rect.collidepoint(pos)]
 
-            # board.board.update()
+            play = ''
 
-            can_play = False
-
+            # Clicked position contains possible capture and enemy piece
             if len(clicked_piece) > 0 and len(clicked_move) > 0:
                 if clicked_piece[0].piece.getColor() != board.board.getTurn():
-                    can_play = True
+                    play = 'capture'
+                elif selected_piece.piece.getPiece() == 'King' and clicked_piece[0].piece.getPiece() == 'Rook' and clicked_piece[0].piece.getColor() == board.board.getTurn():
+                    play = 'castling'
 
+            # Clicked position has a piece of the current player turn.
             elif len(clicked_piece) > 0:
                 if clicked_piece[0].piece.getColor() == board.board.getTurn():
-                    can_play = True
+                    play = 'selected piece'
 
+            # Clicked position has a posibble move.
             elif len(clicked_move) > 0:
-                can_play = True
+                play = 'move'
 
+            if board.board.state == '[GAME OVER]':
+                play = ''
             
-            if can_play:
+            if len(play) > 0:
                 # If selected move has enemy piece == capture.
-                if len(clicked_piece) > 0 and len(clicked_move) > 0:
+                # if len(clicked_piece) > 0 and len(clicked_move) > 0:
+                if play == 'capture':
                     piece = clicked_piece[0]
                     selected_piece.piece.capture(piece.piece)
                     pieces_sprites.remove(piece)
@@ -122,14 +143,15 @@ try:
                     board.board.toggleTurn()
 
                 # Selects piece.
-                elif len(clicked_piece) > 0:
+                # elif len(clicked_piece) > 0:
+                elif play == 'selected piece':
                     if clicked_piece != selected_piece:
                         moves_sprites.empty()
 
                     print(clicked_piece[0].get_piece())
                     selected_piece = clicked_piece[0]
 
-                    moves = board.board.possible_moves(clicked_piece[0].get_piece())
+                    moves = board.board.possible_moves(clicked_piece[0].get_piece(), False)
 
                     if len(moves) > 0:
                         moves_info = board.show_possible_moves(moves, clicked_piece[0].get_piece())
@@ -137,9 +159,26 @@ try:
                             moves_sprites.add(go.CellGameObject(type=m[2], coords=(m[0],m[1]), position=m[3]))
                             
                 # Selected piece moves to new cell.
-                elif len(clicked_move) > 0:
+                # elif len(clicked_move) > 0:
+                elif play == 'move':
                     move = clicked_move[0]
                     selected_piece.piece.move(move.position)
+                    selected_piece = None
+                    moves_sprites.empty()
+                    board.board.toggleTurn()
+
+                elif play == 'castling':
+                    rook = [p for p in pieces_sprites if p.rect.collidepoint(pos)]
+                    rook = rook[0]
+                    rook.piece.move(selected_piece.piece.position)
+                    side = rook.piece.side
+                    if side == 'Queen':
+                        king_new_file = chr(ord(rook.piece.position[0]) - 1)
+                    else:
+                        king_new_file = chr(ord(rook.piece.position[0]) + 1)
+                    king_new_rank = rook.piece.position[1]
+                    king_new_pos = f'{king_new_file}{king_new_rank}'
+                    selected_piece.piece.move(king_new_pos)
                     selected_piece = None
                     moves_sprites.empty()
                     board.board.toggleTurn()

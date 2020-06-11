@@ -6,10 +6,27 @@ class ChessBoard:
         self.pieces = []
         self.turn = 'white'
         self.check = False
+        self.state = None
 
     
     def update(self):
-        self.check = self.check_state(self.turn)
+        if len(self.pieces) == 0: # if no pieces in board setup new game.
+            self.setupBoard()
+            self.turn = 'white'
+            print('[NEW MATCH]')
+            self.state = f'[{self.turn.upper()}] Move.'
+        else:
+            checking_pieces = self.get_pieces_checking()
+            if len(checking_pieces) > 0: # Is king in check?
+                self.check = True
+                self.state = f'[{self.turn.upper()}] In check.'
+                if self.is_check_mate():
+                    self.state = f'[GAME OVER]'
+            else:
+                self.check = False
+                self.state = f'[{self.turn.upper()}] Move.'
+        print(self.state)
+
 
 
     def toggleTurn(self):
@@ -82,7 +99,7 @@ class ChessBoard:
                 return p
 
 
-    def possible_moves(self, piece):
+    def possible_moves(self, piece, seethrough):
         '''
             Return possible moves for given piece.
             :param piece: ChessPiece
@@ -124,16 +141,16 @@ class ChessBoard:
                         moves.append(f'x{c}')
             
         elif piece.getPiece() == 'Rook':
-            moves.extend(self.can_move_inline(piece, 'forward', True))
-            moves.extend(self.can_move_inline(piece, 'back', True))
-            moves.extend(self.can_move_inline(piece, 'right', True))
-            moves.extend(self.can_move_inline(piece, 'left', True))
+            moves.extend(self.can_move_inline(piece, 'forward', True, seethrough))
+            moves.extend(self.can_move_inline(piece, 'back', True, seethrough))
+            moves.extend(self.can_move_inline(piece, 'right', True, seethrough))
+            moves.extend(self.can_move_inline(piece, 'left', True, seethrough))
 
         elif piece.getPiece() == 'Bishop':
-            moves.extend(self.can_move_diagonally(piece, 'forward_right', True))
-            moves.extend(self.can_move_diagonally(piece, 'forward_left', True))
-            moves.extend(self.can_move_diagonally(piece, 'back_right', True))
-            moves.extend(self.can_move_diagonally(piece, 'back_left', True))
+            moves.extend(self.can_move_diagonally(piece, 'forward_right', True, seethrough))
+            moves.extend(self.can_move_diagonally(piece, 'forward_left', True, seethrough))
+            moves.extend(self.can_move_diagonally(piece, 'back_right', True, seethrough))
+            moves.extend(self.can_move_diagonally(piece, 'back_left', True, seethrough))
 
         elif piece.getPiece() == 'Knight':
             for i in [-2,-1,1,2]:
@@ -147,35 +164,57 @@ class ChessBoard:
                             moves.extend(self.can_move_to_cell(piece, next_cell, True))
 
         elif piece.getPiece() == 'Queen':
-            moves.extend(self.can_move_inline(piece, 'forward', True))
-            moves.extend(self.can_move_inline(piece, 'back', True))
-            moves.extend(self.can_move_inline(piece, 'right', True))
-            moves.extend(self.can_move_inline(piece, 'left', True))
+            moves.extend(self.can_move_inline(piece, 'forward', True, seethrough))
+            moves.extend(self.can_move_inline(piece, 'back', True, seethrough))
+            moves.extend(self.can_move_inline(piece, 'right', True, seethrough))
+            moves.extend(self.can_move_inline(piece, 'left', True, seethrough))
 
-            moves.extend(self.can_move_diagonally(piece, 'forward_right', True))
-            moves.extend(self.can_move_diagonally(piece, 'forward_left', True))
-            moves.extend(self.can_move_diagonally(piece, 'back_right', True))
-            moves.extend(self.can_move_diagonally(piece, 'back_left', True))
+            moves.extend(self.can_move_diagonally(piece, 'forward_right', True, seethrough))
+            moves.extend(self.can_move_diagonally(piece, 'forward_left', True, seethrough))
+            moves.extend(self.can_move_diagonally(piece, 'back_right', True, seethrough))
+            moves.extend(self.can_move_diagonally(piece, 'back_left', True, seethrough))
 
         elif piece.getPiece() == 'King':
             for i in [-1,0,1]:
                 for j in [-1,0,1]:
                     if not (i==0 and j==0):
                         next_cell = '{}{}'.format(chr(ord(piece_file)-i*piece_direction), int(piece_rank)-j*piece_direction)
-                        moves.extend(self.can_move_to_cell(piece, next_cell, True))
+                        king_next_cell = self.get_surrounding_enemies(next_cell)
+                        king_next_cell = [e for e in king_next_cell if e.getPiece() == 'King']
+                        if not king_next_cell:
+                            if not self.are_cells_attacked([next_cell], self.turn, True):
+                                moves.extend(self.can_move_to_cell(piece, next_cell, True))
 
             # Castlings
-            # moves.extend(self.can_castle(piece, 'King'))
-            # moves.extend(self.can_castle(piece, 'Queen'))
+            moves.extend(self.can_castle(piece, 'King'))
+            moves.extend(self.can_castle(piece, 'Queen'))
 
         return moves
+
+
+    def get_surrounding_enemies(self, cell):
+        file = cell[0]
+        rank = cell[1]
+
+        pieces = []
+
+        for i in [-1,0,1]:
+                for j in [-1,0,1]:
+                    if not (i==0 and j==0):
+                        next_cell = '{}{}'.format(chr(ord(file)-i), int(rank)-j)
+                        piece = self.get_piece_by_position(next_cell)
+                        if piece:
+                            if piece.getColor() != self.turn:
+                                pieces.append(piece)
+        
+        return pieces
 
 
     def can_castle(self, king, side):
         moves = []
 
         # Check if king has not moved and isnt currently in check.
-        if king.hasMoved() or king.isInCheck():
+        if king.hasMoved() or self.check:
             return moves
 
         # Get rook. Alive, not moved, same color.
@@ -198,7 +237,7 @@ class ChessBoard:
             return moves
         
         # Check if king pass through or ends up in an attacked cell.
-        if self.are_cells_attacked(attacked_cells, king.getColor()):
+        if self.are_cells_attacked(attacked_cells, king.getColor(), False):
             return moves
 
         if side == 'King':
@@ -209,7 +248,7 @@ class ChessBoard:
         return moves
 
 
-    def are_cells_attacked(self, cells, color):
+    def are_cells_attacked(self, cells, color, seethrough):
         '''
             Check if given cells are being attacked by rival piece.
             :param cell: list<str>
@@ -221,7 +260,7 @@ class ChessBoard:
 
         attacked = None
         for r in rival_pieces:
-            moves = self.possible_moves(r)
+            moves = self.possible_moves(r, seethrough)
             attacked = [c for c in cells if c in moves]
             if len(attacked) > 0:
                 return True 
@@ -300,12 +339,13 @@ class ChessBoard:
         return moves
 
 
-    def can_move_inline(self, piece, move_direction, can_capture):
+    def can_move_inline(self, piece, move_direction, can_capture, seethrough):
         '''
             Check if given piece can move to spaces vertically and horizontally.
             :param piece: ChessPiece
             :param move_direction: int
             :param can_capture: bool
+            :param seethrough: bool
             :return: list<str>
         '''
         moves = []
@@ -331,24 +371,27 @@ class ChessBoard:
             # if next_cell not within board then break the loop
             if not self.is_within_board(next_cell[0], next_cell[1]):
                 break
-            
-            if self.is_cell_empty(next_cell):
+
+            if seethrough: # get possible moves as if piece is the only one in the board.
                 moves.append(next_cell)
-            elif can_capture:
-                is_enemy_in_cell, enemy_piece = self.is_enemy_piece_in_cell(next_cell, piece.getColor())
-                if is_enemy_in_cell:
-                    if enemy_piece.getPiece() == 'King':
-                        moves.append(f'x{next_cell}+')
-                    else:
-                        moves.append(f'x{next_cell}')
-                scan = False
             else:
-                scan = False
+                if self.is_cell_empty(next_cell):
+                    moves.append(next_cell)
+                elif can_capture:
+                    is_enemy_in_cell, enemy_piece = self.is_enemy_piece_in_cell(next_cell, piece.getColor())
+                    if is_enemy_in_cell:
+                        if enemy_piece.getPiece() == 'King':
+                            moves.append(f'x{next_cell}+')
+                        else:
+                            moves.append(f'x{next_cell}')
+                    scan = False
+                else:
+                    scan = False
         
         return moves
 
 
-    def can_move_diagonally(self, piece, move_direction, can_capture):
+    def can_move_diagonally(self, piece, move_direction, can_capture, seethrough):
         '''
             Check if given piece can move to spaces diagonally.
             :param piece: ChessPiece
@@ -380,19 +423,22 @@ class ChessBoard:
             if not self.is_within_board(next_cell[0], next_cell[1]):
                 break
             
-            if self.is_cell_empty(next_cell):
+            if seethrough: # get possible moves as if piece is the only one in the board.
                 moves.append(next_cell)
-            elif can_capture:
-                is_enemy_in_cell, enemy_piece = self.is_enemy_piece_in_cell(next_cell, piece.getColor())
-                if is_enemy_in_cell:
-                    if enemy_piece.getPiece() == 'King':
-                        moves.append(f'x{next_cell}+')
-                    else:
-                        moves.append(f'x{next_cell}')
-                scan = False
             else:
-                scan = False
-        
+                if self.is_cell_empty(next_cell):
+                    moves.append(next_cell)
+                elif can_capture:
+                    is_enemy_in_cell, enemy_piece = self.is_enemy_piece_in_cell(next_cell, piece.getColor())
+                    if is_enemy_in_cell:
+                        if enemy_piece.getPiece() == 'King':
+                            moves.append(f'x{next_cell}+')
+                        else:
+                            moves.append(f'x{next_cell}')
+                    scan = False
+                else:
+                    scan = False
+            
         return moves
 
 
@@ -409,34 +455,34 @@ class ChessBoard:
             return True
 
     
-    def get_pieces_checking(self, turn):
+    def get_pieces_checking(self):
         # Get rival pieces moves, search for pieces with check possible moves '+'.
-        rival_pieces = [p for p in self.pieces if p.getColor() != turn and p.isAlive()]
+        rival_pieces = [p for p in self.pieces if p.getColor() != self.turn and p.isAlive()]
 
         check_pieces = []
         for rival in rival_pieces:
-            moves = self.possible_moves(rival)
+            moves = self.possible_moves(rival, False)
             check_move = [m for m in moves if '+' in m]
             if len(check_move) > 0:
                 check_pieces.append(rival)
 
         return check_pieces
 
-    def check_state(self, turn):
-        # Get pieces that are checking the current turn king.
-        check_pieces = self.get_pieces_checking(turn)
+    
+    def is_check_mate(self):
+        pieces_checking = self.get_pieces_checking()
 
-        # If rival piece with check possible move, check current color possible uncheck moves.
-        # Can King get out of the way?
-        current_turn_king = [k for k in self.pieces if k.getPiece() == 'King' and k.getColor() == turn]
-        possible_moves = self.possible_moves(current_turn_king)
+        king = [k for k in self.pieces if k.getPiece() == 'King' and k.getColor() == self.turn]
+        king = king[0]
 
-        # Save current board state.
+        can_king_move = self.possible_moves(king, False)
+        
+        if len(can_king_move) > 0:
+            return False
 
-        # Search for uncheck moves.
+        for check in pieces_checking:
+            position = check.getPosition()
+            if self.are_cells_attacked(position, self.turn, False):
+                return False
 
-        # Can capture checking piece?
-
-        # Can intercept checking move?
-
-        # Return uncheck moves.
+        return True
