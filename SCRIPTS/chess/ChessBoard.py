@@ -6,6 +6,7 @@ class ChessBoard:
         self.pieces = []
         self.turn = 'white'
         self.check = False
+        self.current_state = None
 
     
     def update(self):
