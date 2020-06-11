@@ -1,0 +1,312 @@
+[ ] pawn_moves fxe1=Q+ 
+[x] pawn_captures fxe1=Q+ 
+[ ] special_moves fxe1=Q+ 
+[ ] special_captures fxe1=Q+ 
+[ ] identified_captures fxe1=Q+ 
+[ ] king_castling fxe1=Q+ 
+[ ] queen_castling fxe1=Q+ 
+-----------
+[ ] pawn_moves exf8=Q+ 
+[x] pawn_captures exf8=Q+ 
+[ ] special_moves exf8=Q+ 
+[ ] special_captures exf8=Q+ 
+[ ] identified_captures exf8=Q+ 
+[ ] king_castling exf8=Q+ 
+[ ] queen_castling exf8=Q+ 
+-----------
+[ ] pawn_moves dxe8=Q+ 
+[x] pawn_captures dxe8=Q+ 
+[ ] special_moves dxe8=Q+ 
+[ ] special_captures dxe8=Q+ 
+[ ] identified_captures dxe8=Q+ 
+[ ] king_castling dxe8=Q+ 
+[ ] queen_castling dxe8=Q+ 
+-----------
+[ ] pawn_moves dxe8=Q+ 
+[x] pawn_captures dxe8=Q+ 
+[ ] special_moves dxe8=Q+ 
+[ ] special_captures dxe8=Q+ 
+[ ] identified_captures dxe8=Q+ 
+[ ] king_castling dxe8=Q+ 
+[ ] queen_castling dxe8=Q+ 
+-----------
+[ ] pawn_moves cxd1=R# 
+[x] pawn_captures cxd1=R# 
+[ ] special_moves cxd1=R# 
+[ ] special_captures cxd1=R# 
+[ ] identified_captures cxd1=R# 
+[ ] king_castling cxd1=R# 
+[ ] queen_castling cxd1=R# 
+-----------
+[ ] pawn_moves fxg1=R+ 
+[x] pawn_captures fxg1=R+ 
+[ ] special_moves fxg1=R+ 
+[ ] special_captures fxg1=R+ 
+[ ] identified_captures fxg1=R+ 
+[ ] king_castling fxg1=R+ 
+[ ] queen_castling fxg1=R+ 
+-----------
+[ ] pawn_moves O-O-O+ 
+[ ] pawn_captures O-O-O+ 
+[ ] special_moves O-O-O+ 
+[ ] special_captures O-O-O+ 
+[ ] identified_captures O-O-O+ 
+[x] king_castling O-O-O+ 
+[x] queen_castling O-O-O+ 
+-----------
+[ ] pawn_moves Rbxd1+ 
+[ ] pawn_captures Rbxd1+ 
+[ ] special_moves Rbxd1+ 
+[ ] special_captures Rbxd1+ 
+[x] identified_captures Rbxd1+ 
+[ ] king_castling Rbxd1+ 
+[ ] queen_castling Rbxd1+ 
+-----------
+[ ] pawn_moves Rexc2+ 
+[ ] pawn_captures Rexc2+ 
+[ ] special_moves Rexc2+ 
+[ ] special_captures Rexc2+ 
+[x] identified_captures Rexc2+ 
+[ ] king_castling Rexc2+ 
+[ ] queen_castling Rexc2+ 
+-----------
+[ ] pawn_moves Rexg7+ 
+[ ] pawn_captures Rexg7+ 
+[ ] special_moves Rexg7+ 
+[ ] special_captures Rexg7+ 
+[x] identified_captures Rexg7+ 
+[ ] king_castling Rexg7+ 
+[ ] queen_castling Rexg7+ 
+-----------
+[ ] pawn_moves Rcxb7+ 
+[ ] pawn_captures Rcxb7+ 
+[ ] special_moves Rcxb7+ 
+[ ] special_captures Rcxb7+ 
+[x] identified_captures Rcxb7+ 
+[ ] king_castling Rcxb7+ 
+[ ] queen_castling Rcxb7+ 
+-----------
+[ ] pawn_moves Rcxc7+ 
+[ ] pawn_captures Rcxc7+ 
+[ ] special_moves Rcxc7+ 
+[ ] special_captures Rcxc7+ 
+[x] identified_captures Rcxc7+ 
+[ ] king_castling Rcxc7+ 
+[ ] queen_castling Rcxc7+ 
+-----------
+[ ] pawn_moves Rhxf4+ 
+[ ] pawn_captures Rhxf4+ 
+[ ] special_moves Rhxf4+ 
+[ ] special_captures Rhxf4+ 
+[x] identified_captures Rhxf4+ 
+[ ] king_castling Rhxf4+ 
+[ ] queen_castling Rhxf4+ 
+-----------
+[ ] pawn_moves Rdxc7+ 
+[ ] pawn_captures Rdxc7+ 
+[ ] special_moves Rdxc7+ 
+[ ] special_captures Rdxc7+ 
+[x] identified_captures Rdxc7+ 
+[ ] king_castling Rdxc7+ 
+[ ] queen_castling Rdxc7+ 
+-----------
+[ ] pawn_moves O-O-O+ 
+[ ] pawn_captures O-O-O+ 
+[ ] special_moves O-O-O+ 
+[ ] special_captures O-O-O+ 
+[ ] identified_captures O-O-O+ 
+[x] king_castling O-O-O+ 
+[x] queen_castling O-O-O+ 
+-----------
+[ ] pawn_moves Rgxf5+ 
+[ ] pawn_captures Rgxf5+ 
+[ ] special_moves Rgxf5+ 
+[ ] special_captures Rgxf5+ 
+[x] identified_captures Rgxf5+ 
+[ ] king_castling Rgxf5+ 
+[ ] queen_castling Rgxf5+ 
+-----------
+[ ] pawn_moves Rxg2+ 
+[ ] pawn_captures Rxg2+ 
+[ ] special_moves Rxg2+ 
+[x] special_captures Rxg2+ 
+[ ] identified_captures Rxg2+ 
+[ ] king_castling Rxg2+ 
+[ ] queen_castling Rxg2+ 
+-----------
+[ ] pawn_moves Rxf4+ 
+[ ] pawn_captures Rxf4+ 
+[ ] special_moves Rxf4+ 
+[x] special_captures Rxf4+ 
+[ ] identified_captures Rxf4+ 
+[ ] king_castling Rxf4+ 
+[ ] queen_castling Rxf4+ 
+-----------
+[x] pawn_moves b8=Q+ 
+[ ] pawn_captures b8=Q+ 
+[ ] special_moves b8=Q+ 
+[ ] special_captures b8=Q+ 
+[ ] identified_captures b8=Q+ 
+[ ] king_castling b8=Q+ 
+[ ] queen_castling b8=Q+ 
+-----------
+[ ] pawn_moves Rxe8# 
+[ ] pawn_captures Rxe8# 
+[ ] special_moves Rxe8# 
+[x] special_captures Rxe8# 
+[ ] identified_captures Rxe8# 
+[ ] king_castling Rxe8# 
+[ ] queen_castling Rxe8# 
+-----------
+[ ] pawn_moves Nxe3+ 
+[ ] pawn_captures Nxe3+ 
+[ ] special_moves Nxe3+ 
+[x] special_captures Nxe3+ 
+[ ] identified_captures Nxe3+ 
+[ ] king_castling Nxe3+ 
+[ ] queen_castling Nxe3+ 
+-----------
+[ ] pawn_moves Rhxf1 
+[ ] pawn_captures Rhxf1 
+[ ] special_moves Rhxf1 
+[ ] special_captures Rhxf1 
+[x] identified_captures Rhxf1 
+[ ] king_castling Rhxf1 
+[ ] queen_castling Rhxf1 
+-----------
+[ ] pawn_moves Rxa3 
+[ ] pawn_captures Rxa3 
+[ ] special_moves Rxa3 
+[x] special_captures Rxa3 
+[ ] identified_captures Rxa3 
+[ ] king_castling Rxa3 
+[ ] queen_castling Rxa3 
+-----------
+[ ] pawn_moves dxc4 
+[x] pawn_captures dxc4 
+[ ] special_moves dxc4 
+[ ] special_captures dxc4 
+[ ] identified_captures dxc4 
+[ ] king_castling dxc4 
+[ ] queen_castling dxc4 
+-----------
+[ ] pawn_moves cxd5 
+[x] pawn_captures cxd5 
+[ ] special_moves cxd5 
+[ ] special_captures cxd5 
+[ ] identified_captures cxd5 
+[ ] king_castling cxd5 
+[ ] queen_castling cxd5 
+-----------
+[ ] pawn_moves Qxd5 
+[ ] pawn_captures Qxd5 
+[ ] special_moves Qxd5 
+[x] special_captures Qxd5 
+[ ] identified_captures Qxd5 
+[ ] king_castling Qxd5 
+[ ] queen_castling Qxd5 
+-----------
+[ ] pawn_moves exd5 
+[x] pawn_captures exd5 
+[ ] special_moves exd5 
+[ ] special_captures exd5 
+[ ] identified_captures exd5 
+[ ] king_castling exd5 
+[ ] queen_castling exd5 
+-----------
+[ ] pawn_moves Ra8+ 
+[ ] pawn_captures Ra8+ 
+[x] special_moves Ra8+ 
+[ ] special_captures Ra8+ 
+[ ] identified_captures Ra8+ 
+[ ] king_castling Ra8+ 
+[ ] queen_castling Ra8+ 
+-----------
+[ ] pawn_moves Kg5 
+[ ] pawn_captures Kg5 
+[x] special_moves Kg5 
+[ ] special_captures Kg5 
+[ ] identified_captures Kg5 
+[ ] king_castling Kg5 
+[ ] queen_castling Kg5 
+-----------
+[ ] pawn_moves Kf5 
+[ ] pawn_captures Kf5 
+[x] special_moves Kf5 
+[ ] special_captures Kf5 
+[ ] identified_captures Kf5 
+[ ] king_castling Kf5 
+[ ] queen_castling Kf5 
+-----------
+[ ] pawn_moves Ke6 
+[ ] pawn_captures Ke6 
+[x] special_moves Ke6 
+[ ] special_captures Ke6 
+[ ] identified_captures Ke6 
+[ ] king_castling Ke6 
+[ ] queen_castling Ke6 
+-----------
+[ ] pawn_moves Kd6 
+[ ] pawn_captures Kd6 
+[x] special_moves Kd6 
+[ ] special_captures Kd6 
+[ ] identified_captures Kd6 
+[ ] king_castling Kd6 
+[ ] queen_castling Kd6 
+-----------
+[x] pawn_moves e4 
+[ ] pawn_captures e4 
+[ ] special_moves e4 
+[ ] special_captures e4 
+[ ] identified_captures e4 
+[ ] king_castling e4 
+[ ] queen_castling e4 
+-----------
+[x] pawn_moves e5 
+[ ] pawn_captures e5 
+[ ] special_moves e5 
+[ ] special_captures e5 
+[ ] identified_captures e5 
+[ ] king_castling e5 
+[ ] queen_castling e5 
+-----------
+[x] pawn_moves d3 
+[ ] pawn_captures d3 
+[ ] special_moves d3 
+[ ] special_captures d3 
+[ ] identified_captures d3 
+[ ] king_castling d3 
+[ ] queen_castling d3 
+-----------
+[x] pawn_moves d6 
+[ ] pawn_captures d6 
+[ ] special_moves d6 
+[ ] special_captures d6 
+[ ] identified_captures d6 
+[ ] king_castling d6 
+[ ] queen_castling d6 
+-----------
+[x] pawn_moves c6 
+[ ] pawn_captures c6 
+[ ] special_moves c6 
+[ ] special_captures c6 
+[ ] identified_captures c6 
+[ ] king_castling c6 
+[ ] queen_castling c6 
+-----------
+[x] pawn_moves b5 
+[ ] pawn_captures b5 
+[ ] special_moves b5 
+[ ] special_captures b5 
+[ ] identified_captures b5 
+[ ] king_castling b5 
+[ ] queen_castling b5 
+-----------
+[x] pawn_moves a5 
+[ ] pawn_captures a5 
+[ ] special_moves a5 
+[ ] special_captures a5 
+[ ] identified_captures a5 
+[ ] king_castling a5 
+[ ] queen_castling a5 
+-----------
