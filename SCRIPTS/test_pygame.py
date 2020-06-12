@@ -3,7 +3,7 @@ import pygame
 import chess.ChessBoard as cb
 import py_game.GameObjects as go
 
-scenario = 'castling2'
+scenario = 'checkmate1'
 
 try:
     # Initialize board object
